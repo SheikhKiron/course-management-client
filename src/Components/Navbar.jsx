@@ -1,6 +1,30 @@
+'use client';
+import Link from 'next/link';
+import Logo from './Logo';
+import { usePathname } from 'next/navigation';
+import { use } from 'react';
+import { AuthContext } from '@/app/Auth/AuthContext';
+import { toast } from 'react-toastify';
+
 export default function Navbar() {
+  const { user, handleLogut } = use(AuthContext);
+  const pathname = usePathname();
+
+  const links = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/About' },
+    { name: 'Contact', href: '/Contact' },
+    { name: 'Courses', href: '/Courses' },
+    { name: 'Categories', href: '/Categories' },
+  ];
+  const handleLogout = () => {
+    handleLogut()
+      .then(() => toast.success('Logout Successfully'))
+    .catch(err=>toast.error(err.message))
+   }
+
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50 px-4">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -11,65 +35,102 @@ export default function Navbar() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              {' '}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
-              />{' '}
+              />
             </svg>
           </div>
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
           >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            {links.map(link => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={
+                    pathname === link.href
+                      ? 'bg-blue-500 text-white rounded'
+                      : ''
+                  }
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+
+        {/* Logo */}
+        <Link href="/">
+          <Logo />
+        </Link>
       </div>
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+          {links.map(link => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={
+                  pathname === link.href
+                    ? 'bg-blue-500 text-white rounded px-2 py-1'
+                    : ''
+                }
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
+
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <div className="flex grow justify-end px-2">
+            <div className="flex items-stretch">
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className=""
+                >
+             <img src={user?.photoURL} alt="" className='w-14 rounded-full' />
+                </div>
+                <ul
+                  tabIndex="-1"
+                  className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm"
+                  >
+                  <div className='text-center border-b-2 border-secondary pb-2'>
+                    <p>{user.displayName}</p>
+                    <p>{user.email}</p>
+                  </div>
+                  <li>
+                    <a>Item 1</a>
+                  </li>
+                  <li>
+                    <a>Item 2</a>
+                  </li>
+                  <li>
+                    {' '}
+                    <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Link
+            href="/Login"
+            className="btn bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );
