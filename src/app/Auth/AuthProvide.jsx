@@ -6,18 +6,21 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const handleLogut = () => {
     return signOut(auth)
   }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
+      setLoading(false)
     });
     return () => unsubscribe();
   }, []);
   const authInfo = {
     user,
-    handleLogut
+    handleLogut,
+    loading
   };
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 }

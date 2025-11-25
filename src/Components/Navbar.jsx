@@ -1,15 +1,16 @@
 'use client';
 import Link from 'next/link';
 import Logo from './Logo';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { use } from 'react';
 import { AuthContext } from '@/app/Auth/AuthContext';
 import { toast } from 'react-toastify';
 
+
 export default function Navbar() {
   const { user, handleLogut } = use(AuthContext);
   const pathname = usePathname();
-
+const router = useRouter();
   const links = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/About' },
@@ -19,7 +20,10 @@ export default function Navbar() {
   ];
   const handleLogout = () => {
     handleLogut()
-      .then(() => toast.success('Logout Successfully'))
+      .then(() => {
+        toast.success('Logout Successfully')
+         router.push('/'); 
+      })
     .catch(err=>toast.error(err.message))
    }
 
@@ -94,30 +98,38 @@ export default function Navbar() {
           <div className="flex grow justify-end px-2">
             <div className="flex items-stretch">
               <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className=""
-                >
-             <img src={user?.photoURL} alt="" className='w-14 rounded-full' />
+                <div tabIndex={0} role="button" className="">
+                  <img
+                    src={
+                      user?.photoURL ||
+                      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg'
+                    }
+                    alt=""
+                    className="w-14 h-14 rounded-full border-2 border-primary"
+                  />
                 </div>
                 <ul
                   tabIndex="-1"
                   className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm"
-                  >
-                  <div className='text-center border-b-2 border-secondary pb-2'>
+                >
+                  <div className="text-center border-b-2 border-secondary pb-2">
                     <p>{user.displayName}</p>
                     <p>{user.email}</p>
                   </div>
                   <li>
-                    <a>Item 1</a>
+                   <Link href='/AddCourse'>Add Course</Link>
                   </li>
                   <li>
-                    <a>Item 2</a>
+                   <Link href='/ManageCourse'>Manage Course</Link>
                   </li>
                   <li>
                     {' '}
-                    <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>

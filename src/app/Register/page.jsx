@@ -6,6 +6,8 @@ import { auth } from '../Firebase/firebase.config';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Social from '@/Components/Social';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Register() {
   const {
@@ -14,6 +16,10 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get('redirect') || '/';
   const handleRegister = data => {
     console.log(data);
     const profileImg = data.photo[0];
@@ -37,6 +43,7 @@ export default function Register() {
             })
               .then(() => {
                 toast.success('Registration Successfully');
+                  router.replace(redirect);
               })
               .catch(error => toast.error(error.code));
           })
@@ -117,6 +124,8 @@ export default function Register() {
               </Link>
             </p>
           </form>
+              <p className='text-center'>Or</p>
+              <Social></Social>
         </div>
       </div>
     </div>
