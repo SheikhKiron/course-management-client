@@ -1,6 +1,4 @@
-// firebase.config.js
-'use client';
-
+// src/Firebase/firebase.config.js
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
@@ -14,12 +12,9 @@ const firebaseConfig = {
 };
 
 
-const app =
-  typeof window !== 'undefined'
-    ? !getApps().length
-      ? initializeApp(firebaseConfig)
-      : getApp()
-    : null;
-const auth = app ? getAuth(app) : null;
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+
+const auth = getAuth(app);
 
 export { app, auth };
