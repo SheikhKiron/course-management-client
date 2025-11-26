@@ -4,7 +4,6 @@ import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import { ToastContainer } from 'react-toastify';
 import AuthProvider from './Auth/AuthProvide';
-import ClientProviders from './ClientProviders/page';
 
 
 
@@ -30,6 +29,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AuthProvider>
           <div className="bg-gray-100">
             <div className="md:w-11/12 mx-auto">
               <Navbar></Navbar>
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
               <Footer></Footer>
             </div>
           </div>
-       <ClientProviders></ClientProviders>
+        </AuthProvider>
       </body>
     </html>
   );
