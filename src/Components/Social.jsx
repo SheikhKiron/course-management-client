@@ -50,7 +50,7 @@ export default function Social() {
         </svg>
         Login with Google
       </button>
-      ;
+      
     </div>
   );
 }
