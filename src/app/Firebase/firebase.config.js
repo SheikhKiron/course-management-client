@@ -1,5 +1,7 @@
+// firebase.config.js
 'use client';
-import { getApps, getApp, initializeApp } from 'firebase/app';
+
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -11,12 +13,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-let app;
-let auth;
 
-if (typeof window !== 'undefined') {
-  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-  auth = getAuth(app);
-}
+const app =
+  typeof window !== 'undefined'
+    ? !getApps().length
+      ? initializeApp(firebaseConfig)
+      : getApp()
+    : null;
+const auth = app ? getAuth(app) : null;
 
 export { app, auth };
