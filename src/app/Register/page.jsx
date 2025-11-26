@@ -58,6 +58,7 @@ function RegisterContent() {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-289px)] py-10">
+      <title>EduMaster - Register</title>
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
           <h1 className="text-5xl text-primary font-bold">Register now!</h1>

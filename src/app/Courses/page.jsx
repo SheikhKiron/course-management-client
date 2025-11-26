@@ -32,6 +32,7 @@ export default function Courses() {
 
   return (
     <div className="p-6">
+      <title>EduMaster-Courses</title>
       <h1 className="text-3xl font-bold mb-4">Courses</h1>
 
       <div className="mb-4 flex flex-col md:flex-row md:items-center gap-4">
@@ -62,7 +63,7 @@ export default function Courses() {
           {courses.map(course => (
             <div
               key={course._id}
-              className="card bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              className="card bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:bg-gray-100"
             >
               {course.imageUrl && (
                 <img

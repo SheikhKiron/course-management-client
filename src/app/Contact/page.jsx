@@ -14,8 +14,8 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-5 flex justify-center">
+      <title>EduMaster - Contact</title>
       <div className="w-full max-w-5xl grid md:grid-cols-2 gap-10">
-       
         <div>
           <h1 className="text-5xl font-bold text-primary mb-4">Contact Us</h1>
           <p className="text-gray-600 mb-6 text-lg">
@@ -41,7 +41,6 @@ export default function Contact() {
           </div>
         </div>
 
-       
         <div className="bg-white shadow-lg rounded-lg p-8">
           <h2 className="text-3xl font-semibold text-primary mb-6">
             Send Message
