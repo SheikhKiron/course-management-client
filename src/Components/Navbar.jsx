@@ -3,8 +3,9 @@ import Link from 'next/link';
 import Logo from './Logo';
 import { usePathname, useRouter } from 'next/navigation';
 import { use } from 'react';
-import { AuthContext } from '@/app/Auth/AuthContext';
+
 import { toast } from 'react-toastify';
+import { AuthContext } from '@/app/Auth/AuthContext';
 
 
 export default function Navbar() {
