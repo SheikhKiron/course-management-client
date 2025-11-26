@@ -22,5 +22,5 @@ export default function AuthProvider({ children }) {
     handleLogut,
     loading
   };
-  return <AuthContext value={authInfo}>{children}</AuthContext>;
+  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
 }
