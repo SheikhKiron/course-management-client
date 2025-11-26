@@ -1,5 +1,6 @@
-// lib/firebase.js
-import { initializeApp } from 'firebase/app';
+'use client';
+
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -11,7 +12,7 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase only once
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
 
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+export const auth = getAuth(app);
