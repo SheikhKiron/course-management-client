@@ -1,4 +1,6 @@
 'use client';
+
+import { Suspense } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -9,7 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Social from '@/Components/Social';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function Register() {
+
+function RegisterContent() {
   const {
     register,
     handleSubmit,
@@ -20,6 +23,7 @@ export default function Register() {
   const searchParams = useSearchParams();
 
   const redirect = searchParams.get('redirect') || '/';
+
   const handleRegister = data => {
     console.log(data);
     const profileImg = data.photo[0];
@@ -43,7 +47,7 @@ export default function Register() {
             })
               .then(() => {
                 toast.success('Registration Successfully');
-                  router.replace(redirect);
+                router.replace(redirect);
               })
               .catch(error => toast.error(error.code));
           })
@@ -124,10 +128,19 @@ export default function Register() {
               </Link>
             </p>
           </form>
-              <p className='text-center'>Or</p>
-              <Social></Social>
+          <p className="text-center">Or</p>
+          <Social />
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function Register() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterContent />
+    </Suspense>
   );
 }
